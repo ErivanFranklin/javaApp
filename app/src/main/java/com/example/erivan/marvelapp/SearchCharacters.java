@@ -40,9 +40,11 @@ public class SearchCharacters {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                String userJson = "{'age':26,'email':'norman@futurestud.io','isDeveloper':true,'name':'Norman'}";
                 Gson gson = new Gson();
-//                UserActivity userObject = gson.fromJson(userJson, UserActivity.class);
+
+                SearchCharacters SearchCharacters = gson.fromJson(responseString, SearchCharacters.class);
+                Log.e("URL", responseString);
+
             }
         });
     }
