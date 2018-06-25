@@ -3,12 +3,8 @@ package com.example.erivan.marvelapp;
 import android.util.Log;
 
 import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.TextHttpResponseHandler;
-
-import java.util.Arrays;
-import java.util.List;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -22,8 +18,9 @@ public class SearchCharacters {
     private static final String COMBINED_HASH = "9b5351214145b73d4a33f74105d8c2ba";
 
     String URL;
+    String response = "Nothing";
 
-    public void getAll(){
+    public String getAll(){
 
         this.URL = CHARACTERS_URL + "ts=" + TIME_STAMP + "&apikey=" + PUBLIC_KEY + "&hash=" + COMBINED_HASH;
         Log.e("URL", this.URL);
@@ -40,13 +37,16 @@ public class SearchCharacters {
 
             @Override
             public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                Gson gson = new Gson();
-
-                SearchCharacters SearchCharacters = gson.fromJson(responseString, SearchCharacters.class);
+//                Gson gson = new Gson();
+//                SearchCharacters SearchCharacters = gson.fromJson(responseString, SearchCharacters.class);
                 Log.e("URL", responseString);
+//                response = responseString;
 
             }
         });
+
+        return response;
+
     }
 
 }

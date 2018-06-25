@@ -18,7 +18,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -38,6 +47,10 @@ public class UserActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
+    private ListView mListView;
+    private ArrayAdapter mArrayAdapter;
+    String characterDataArray[] = {};
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +58,23 @@ public class UserActivity extends AppCompatActivity {
         setContentView(R.layout.activity_user);
 
 
+        mListView = (ListView) findViewById(R.id.myListView);
+
         characters.getAll();
 
+        String s = getJSONFile();
 
+
+        try {
+
+            JSONObject rooJSON = new JSONObject(s);
+            JSONArray toopingJSON = rooJSON.getJSONArray("results");
+
+        }catch (JSONException e){
+            e.printStackTrace();
+        }
+
+//        mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, characters.getAll());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -63,17 +90,27 @@ public class UserActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
 
     }
 
+    public String getJSONFile(){
+        String json = null;
+        try {
+
+            InputStream is = getResources().openRawResource(R.raw.character);
+            int size = is.available();
+            byte[] buffer = new byte[size];
+            is.read(buffer);
+            is.close();
+            json = new String(buffer, "UTF-8");
+
+        } catch (IOException ex) {
+            ex.printStackTrace();
+            return null;
+        }
+        return json;
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
