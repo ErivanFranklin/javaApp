@@ -1,8 +1,6 @@
 package com.example.erivan.marvelapp;
 
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -18,16 +16,30 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.erivan.marvelapp.Model.Characters;
+import com.example.erivan.marvelapp.Remote.CharactersService;
+import com.google.gson.Gson;
+import com.loopj.android.http.HttpGet;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
+import java.net.URISyntaxException;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import thirdParty.com.character.Result;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -47,34 +59,18 @@ public class UserActivity extends AppCompatActivity {
      * The {@link ViewPager} that will host the section contents.
      */
     private ViewPager mViewPager;
-    private ListView mListView;
-    private ArrayAdapter mArrayAdapter;
-    String characterDataArray[] = {};
 
+    CharactersService mService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user);
 
+        mService = SearchCharacters.getCharactersService();
 
-        mListView = (ListView) findViewById(R.id.myListView);
+        getCharactersData();
 
-        characters.getAll();
-
-        String s = getJSONFile();
-
-
-        try {
-
-            JSONObject rooJSON = new JSONObject(s);
-            JSONArray toopingJSON = rooJSON.getJSONArray("results");
-
-        }catch (JSONException e){
-            e.printStackTrace();
-        }
-
-//        mArrayAdapter = new ArrayAdapter(this, android.R.layout.simple_list_item_1, characters.getAll());
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -90,25 +86,6 @@ public class UserActivity extends AppCompatActivity {
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-
-    }
-
-    public String getJSONFile(){
-        String json = null;
-        try {
-
-            InputStream is = getResources().openRawResource(R.raw.character);
-            int size = is.available();
-            byte[] buffer = new byte[size];
-            is.read(buffer);
-            is.close();
-            json = new String(buffer, "UTF-8");
-
-        } catch (IOException ex) {
-            ex.printStackTrace();
-            return null;
-        }
-        return json;
 
     }
 
@@ -132,6 +109,21 @@ public class UserActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void getCharactersData() {
+
+        mService.getData().enqueue(new Callback<Characters>() {
+            @Override
+            public void onResponse(Call<Characters> call, Response<Characters> response) {
+                System.out.println(response.body().getData());
+            }
+
+            @Override
+            public void onFailure(Call<Characters> call, Throwable t) {
+                Log.e("ERROR :", t.getMessage());
+            }
+        });
     }
 
     /**
