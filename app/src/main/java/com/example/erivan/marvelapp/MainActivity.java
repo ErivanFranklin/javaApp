@@ -10,6 +10,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.erivan.marvelapp.Activities.Characters;
+
 public class MainActivity extends AppCompatActivity {
 
     DatabaseHelper helper = new DatabaseHelper(this);
@@ -39,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
                     String user_password  = helper.searchUser(emailStr);
 
                     if(passwordStr.equals(user_password)){
-                        Intent launchUserDisplay = new Intent(MainActivity.this, UserActivity.class);
+                        Intent launchUserDisplay = new Intent(MainActivity.this, Characters.class);
                         startActivity(launchUserDisplay);
 
                     }else{

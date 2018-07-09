@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">marvelApp</string>
-    <string name="title_activity_user">UserActivity</string>
     <string name="tab_text_1">Tab 1</string>
     <string name="tab_text_2">Tab 2</string>
     <string name="tab_text_3">Tab 3</string>
@@ -13,4 +12,5 @@
     <string name="password">Password</string>
     <string name="login">Login</string>
     <string name="hello_word">Hello Word</string>
+    <string name="title_activity_characters">Characters</string>
 </resources>
