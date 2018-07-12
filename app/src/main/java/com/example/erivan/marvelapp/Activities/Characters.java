@@ -2,7 +2,6 @@ package com.example.erivan.marvelapp.Activities;
 
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -20,7 +19,6 @@ import com.example.erivan.marvelapp.Data.CharacterRecyclerViewAdapter;
 import com.example.erivan.marvelapp.Model.Character;
 import com.example.erivan.marvelapp.R;
 import com.example.erivan.marvelapp.Util.Constants;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -34,6 +32,7 @@ public class Characters extends AppCompatActivity {
     private CharacterRecyclerViewAdapter characterRecyclerViewAdapter;
     private List<Character> characterList;
     private RequestQueue requestQueue;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,7 +49,15 @@ public class Characters extends AppCompatActivity {
 
         characterList = new ArrayList<>();
 
-        getCharacters("hd");
+
+
+        characterList = getCharacters("hd");
+
+
+        characterRecyclerViewAdapter = new CharacterRecyclerViewAdapter(this, characterList);
+        recyclerView.setAdapter(characterRecyclerViewAdapter);
+        characterRecyclerViewAdapter.notifyDataSetChanged();
+
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -72,13 +79,18 @@ public class Characters extends AppCompatActivity {
                     JSONObject data = response.getJSONObject("data");
                     JSONArray results = data.getJSONArray("results");
 
-                    Character character = new Character();
 
                     for (int i = 0; i < results.length(); i++ ){
                         try {
+                            Character character = new Character();
                             JSONObject resultsObject = results.getJSONObject(i);
-                            Log.d("ResultName :", resultsObject.getString("title"));
+                            character.setName(resultsObject.getString("name"));
 
+                            JSONObject thumbnail = resultsObject.getJSONObject("thumbnail");
+                            character.setPoster(thumbnail.getString("path") + Constants.PORTRAIT_FANTASTIC + thumbnail.getString("extension"));
+                            Log.e("POSTER", character.getPoster());
+
+                            characterList.add(character);
                         }catch (JSONException e){
 
                         }
@@ -94,9 +106,9 @@ public class Characters extends AppCompatActivity {
             }
         });
 
+
         requestQueue.add(jsonObjectRequest);
         return characterList;
-
-    };
+    }
 
 }

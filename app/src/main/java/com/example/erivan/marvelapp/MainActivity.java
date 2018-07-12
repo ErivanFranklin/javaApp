@@ -28,6 +28,9 @@ public class MainActivity extends AppCompatActivity {
 
         signup = (TextView) findViewById(R.id.signup);
 
+        Intent launchUserDisplay = new Intent(MainActivity.this, Characters.class);
+        startActivity(launchUserDisplay);
+
         mButton.setOnClickListener(new View.OnClickListener(){
             public void onClick(View v){
 
