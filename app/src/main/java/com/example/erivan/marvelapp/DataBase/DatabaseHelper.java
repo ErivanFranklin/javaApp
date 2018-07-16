@@ -1,4 +1,4 @@
-package com.example.erivan.marvelapp;
+package com.example.erivan.marvelapp.DataBase;
 
 import android.content.ContentValues;
 import android.content.Context;

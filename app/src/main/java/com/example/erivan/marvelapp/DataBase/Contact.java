@@ -1,4 +1,4 @@
-package com.example.erivan.marvelapp;
+package com.example.erivan.marvelapp.DataBase;
 
 public class Contact {
     int id;

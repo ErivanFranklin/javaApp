@@ -13,4 +13,5 @@
     <string name="login">Login</string>
     <string name="hello_word">Hello Word</string>
     <string name="title_activity_characters">Characters</string>
+    <string name="title_activity_main2">Main2Activity</string>
 </resources>

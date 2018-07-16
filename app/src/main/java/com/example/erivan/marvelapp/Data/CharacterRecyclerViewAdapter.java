@@ -3,6 +3,7 @@ package com.example.erivan.marvelapp.Data;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +22,10 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
     List<Character> charactersList;
 
     public CharacterRecyclerViewAdapter(Context context, List<Character> character) {
+
         this.context = context;
         charactersList = character;
+
     }
 
     @NonNull
@@ -30,6 +33,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
     public CharacterRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.character_row, parent,false);
+        Log.e("parent", parent.toString());
         return new ViewHolder(view, context);
     }
 
