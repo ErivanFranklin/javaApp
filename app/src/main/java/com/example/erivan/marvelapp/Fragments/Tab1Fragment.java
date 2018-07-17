@@ -62,7 +62,6 @@ public class Tab1Fragment extends Fragment {
         characterRecyclerViewAdapter = new CharacterRecyclerViewAdapter(getActivity(), characterList);
         recyclerView.setAdapter(characterRecyclerViewAdapter);
         characterRecyclerViewAdapter.notifyDataSetChanged();
-        Log.e("characterRecycler", characterRecyclerViewAdapter.toString());
     }
 
 

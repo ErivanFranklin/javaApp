@@ -24,6 +24,7 @@ import com.example.erivan.marvelapp.Fragments.Tab1Fragment;
 import com.example.erivan.marvelapp.Fragments.Tab2Fragment;
 import com.example.erivan.marvelapp.Fragments.Tab3Fragment;
 import com.example.erivan.marvelapp.R;
+import com.example.erivan.marvelapp.Util.MyTask;
 
 public class Main2Activity extends AppCompatActivity {
 
@@ -36,6 +37,10 @@ public class Main2Activity extends AppCompatActivity {
         setContentView(R.layout.activity_main2);
 
         mSectionPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
+
+        System.out.println("HERE:");
+        MyTask myTask = new MyTask();
+        myTask.execute("reer", String.valueOf(1), "fdsf");
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         setUpViewPager(mViewPager);
