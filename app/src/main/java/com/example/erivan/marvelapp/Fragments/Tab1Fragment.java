@@ -59,9 +59,24 @@ public class Tab1Fragment extends Fragment {
 
         characterList = getCharacters("hd");
 
-        characterRecyclerViewAdapter = new CharacterRecyclerViewAdapter(getActivity(), characterList);
-        recyclerView.setAdapter(characterRecyclerViewAdapter);
-        characterRecyclerViewAdapter.notifyDataSetChanged();
+
+        int i = 0;
+        synchronized (getActivity()){
+
+            while (i < 80){
+                try {
+                    Thread.sleep(10);
+                    i++;
+                    if (i == 69){
+                        characterRecyclerViewAdapter = new CharacterRecyclerViewAdapter(getActivity(), characterList);
+                        recyclerView.setAdapter(characterRecyclerViewAdapter);
+                        characterRecyclerViewAdapter.notifyDataSetChanged();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
     }
 
 

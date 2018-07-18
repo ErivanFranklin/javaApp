@@ -38,7 +38,6 @@ public class Main2Activity extends AppCompatActivity {
 
         mSectionPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
 
-        System.out.println("HERE:");
         MyTask myTask = new MyTask();
         myTask.execute("reer", String.valueOf(1), "fdsf");
 
@@ -63,9 +62,9 @@ public class Main2Activity extends AppCompatActivity {
     public void setUpViewPager(ViewPager viewPager){
 
         SectionsPageAdapter sectionsPageAdapter = new SectionsPageAdapter(getSupportFragmentManager());
-        sectionsPageAdapter.addFragment(new Tab1Fragment(), "TAB1");
-        sectionsPageAdapter.addFragment(new Tab2Fragment(), "TAB2");
-        sectionsPageAdapter.addFragment(new Tab3Fragment(), "TAB3");
+        sectionsPageAdapter.addFragment(new Tab1Fragment(), "CHARACTERS");
+        sectionsPageAdapter.addFragment(new Tab2Fragment(), "COMICS");
+        sectionsPageAdapter.addFragment(new Tab3Fragment(), "SERIES");
         viewPager.setAdapter(sectionsPageAdapter);
 
     }

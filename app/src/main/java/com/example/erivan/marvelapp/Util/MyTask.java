@@ -7,8 +7,7 @@ public class MyTask extends AsyncTask<String, Integer, String> {
 
     @Override
     protected String doInBackground(String... strings) {
-        Log.e("sfdfds",MyTask.this.toString());
-        System.out.println("PRINT : //2A");
+    System.out.println("PRINT : //2A");
         int i = 0;
         synchronized (this){
 

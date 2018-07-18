@@ -87,7 +87,7 @@ public class Characters extends AppCompatActivity {
                             character.setName(resultsObject.getString("name"));
 
                             JSONObject thumbnail = resultsObject.getJSONObject("thumbnail");
-                            character.setPoster(thumbnail.getString("path") + Constants.PORTRAIT_FANTASTIC + thumbnail.getString("extension"));
+                            character.setPoster(thumbnail.getString("path") + Constants.PORTRAIT_UCANNY + thumbnail.getString("extension"));
                             Log.e("POSTER", character.getPoster());
 
                             characterList.add(character);
