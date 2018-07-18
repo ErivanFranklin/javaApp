@@ -33,16 +33,17 @@ public class Tab1Fragment extends Fragment {
     private static final String TAG = "Tab1Fragment";
     private RecyclerView recyclerView;
     private CharacterRecyclerViewAdapter characterRecyclerViewAdapter;
+    private Constants constants = new Constants();
     private List<Character> characterList;
     private RequestQueue requestQueue;
-    private  View view;
+    private View view;
+    private String URL = "";
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         view = inflater.inflate(R.layout.tab1_fragment,container,false);
-
         return view;
 
     }
@@ -55,10 +56,12 @@ public class Tab1Fragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerViewTab1);
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+
         characterList = new ArrayList<>();
 
-        characterList = getCharacters("hd");
+        URL = constants.Constants("characters", "", "27-05-2018", "10");
 
+        characterList = getCharacters("hd");
 
         int i = 0;
         synchronized (getActivity()){
@@ -83,7 +86,7 @@ public class Tab1Fragment extends Fragment {
     public List<Character> getCharacters(String search){
         characterList.clear();
 
-        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, Constants.URL_TODO, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(Request.Method.GET, URL, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject response) {
                 try {
