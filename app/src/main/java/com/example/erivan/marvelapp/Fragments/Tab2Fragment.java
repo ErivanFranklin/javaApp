@@ -18,6 +18,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.erivan.marvelapp.Data.CharacterRecyclerViewAdapter;
+import com.example.erivan.marvelapp.Data.ComicRecyclerViewAdapter;
 import com.example.erivan.marvelapp.Model.Character;
 import com.example.erivan.marvelapp.Model.Comics;
 import com.example.erivan.marvelapp.R;
@@ -33,7 +34,7 @@ import java.util.List;
 public class Tab2Fragment  extends Fragment{
     private static final String TAG = "Tab2Fragment";
     private RecyclerView recyclerView;
-    private CharacterRecyclerViewAdapter characterRecyclerViewAdapter;
+    private ComicRecyclerViewAdapter comicRecyclerViewAdapter;
     private Constants constants = new Constants();
     private List<Comics> comicsList;
     private RequestQueue requestQueue;
@@ -44,7 +45,7 @@ public class Tab2Fragment  extends Fragment{
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.tab2_fragment, container, false);
+        view = inflater.inflate(R.layout.tab2_fragment, container, false);
         return view;
     }
 
@@ -65,14 +66,19 @@ public class Tab2Fragment  extends Fragment{
         int i = 0;
         synchronized (getActivity()){
 
-            while (i < 80){
+            while (i < 1000){
                 try {
-                    Thread.sleep(10);
+                    Thread.sleep(20);
                     i++;
-                    if (i == 69){
-//                        characterRecyclerViewAdapter = new CharacterRecyclerViewAdapter(getActivity(), comicsList);
-//                        recyclerView.setAdapter(characterRecyclerViewAdapter);
-//                        characterRecyclerViewAdapter.notifyDataSetChanged();
+                    if (i == 998){
+                        comicRecyclerViewAdapter = new ComicRecyclerViewAdapter(getActivity(), comicsList);
+                        if (comicRecyclerViewAdapter != null){
+                            recyclerView.setAdapter(comicRecyclerViewAdapter);
+                            comicRecyclerViewAdapter.notifyDataSetChanged();
+                            Log.e("HAS Adapter", comicRecyclerViewAdapter.toString());
+                        }else{
+                            Log.e("NO Adapter", comicRecyclerViewAdapter.toString());
+                        }
                     }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -101,11 +107,7 @@ public class Tab2Fragment  extends Fragment{
                             comics.setVariantDescription(resultsObject.getString("variantDescription"));
 
                             JSONObject thumbnail = resultsObject.getJSONObject("thumbnail");
-                            comics.setPoster(thumbnail.getString("path") + Constants.PORTRAIT_FANTASTIC + thumbnail.getString("extension"));
-                            Log.e("GET A", comics.getPoster());
-                            Log.e("GET B", comics.getFormat());
-                            Log.e("GET C", comics.getTitle());
-                            Log.e("GET D", comics.getVariantDescription());
+                            comics.setPoster(thumbnail.getString("PATH :") + Constants.PORTRAIT_FANTASTIC + thumbnail.getString("extension"));
 
                             comicsList.add(comics);
                         }catch (JSONException e){

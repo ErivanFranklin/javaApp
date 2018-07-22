@@ -12,59 +12,67 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.erivan.marvelapp.Model.Character;
+import com.example.erivan.marvelapp.Model.Comics;
 import com.example.erivan.marvelapp.R;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
-public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<CharacterRecyclerViewAdapter.ViewHolder>{
+
+public class ComicRecyclerViewAdapter extends RecyclerView.Adapter<ComicRecyclerViewAdapter.ViewHolder> {
+
     Context context;
-    List<Character> charactersList;
+    List<Comics> comicsList;
 
-    public CharacterRecyclerViewAdapter(Context context, List<Character> character) {
 
+    public ComicRecyclerViewAdapter(Context context, List<Comics> comics) {
         this.context = context;
-        charactersList = character;
-
+        comicsList = comics;
     }
 
     @NonNull
     @Override
-    public CharacterRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public ComicRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.character_row, parent,false);
+                .inflate(R.layout.comics_row, parent, false);
         return new ViewHolder(view, context);
     }
 
     @Override
-    public void onBindViewHolder(CharacterRecyclerViewAdapter.ViewHolder holder, int position) {
-        Character character = charactersList.get(position);
+    public void onBindViewHolder(ComicRecyclerViewAdapter.ViewHolder holder, int position) {
+        Comics comics = comicsList.get(position);
 
-        String posterLink = character.getPoster();
+        String posterLink = comics.getPoster();
         Picasso.get()
                 .load(posterLink)
                 .placeholder(R.drawable.avangers_logo)
                 .into(holder.poster);
 
-        holder.name.setText(character.getName());
+        holder.title.setText(comics.getTitle());
+        holder.format.setText(comics.getFormat());
+        holder.variantDescription.setText(comics.getVariantDescription());
     }
+
 
     @Override
     public int getItemCount() {
-
-        return charactersList.size();
+        return comicsList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+    public class ViewHolder extends  RecyclerView.ViewHolder implements View.OnClickListener{
 
-        TextView name;
+        TextView title;
+        TextView format;
+        TextView variantDescription;
         ImageView poster;
 
         public ViewHolder(View itemView, Context ctx) {
             super(itemView);
             context = ctx;
-
-            name = (TextView) itemView.findViewById(R.id.TextViewNameID);
+            title = (TextView) itemView.findViewById(R.id.TextViewTitleID);
+            format = (TextView) itemView.findViewById(R.id.TextViewFormatID);
+            variantDescription = (TextView) itemView.findViewById(R.id.TextViewVariantDescriptionID);
             poster = (ImageView) itemView.findViewById(R.id.imageViewID);
 
             itemView.setOnClickListener(new View.OnClickListener() {
@@ -73,6 +81,7 @@ public class CharacterRecyclerViewAdapter extends RecyclerView.Adapter<Character
                     Toast.makeText(context, "Row Trapped!!!", Toast.LENGTH_LONG).show();
                 }
             });
+
         }
 
         @Override

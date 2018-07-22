@@ -102,8 +102,6 @@ public class Tab1Fragment extends Fragment {
 
                             JSONObject thumbnail = resultsObject.getJSONObject("thumbnail");
                             character.setPoster(thumbnail.getString("path") + Constants.PORTRAIT_FANTASTIC + thumbnail.getString("extension"));
-                            Log.e("POSTER", character.getPoster());
-
                             characterList.add(character);
                         }catch (JSONException e){
 
